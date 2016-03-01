@@ -3,6 +3,7 @@ package generalassembly.yuliyakaleda.calendarcp;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
@@ -71,7 +72,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
                 CalendarContract.Calendars.ACCOUNT_NAME + " = ?",
                 //TODO: insert your email address that will be associated with the calendar
 
-                new String[]{"your.email@gmail.com"},
+                new String[]{"jackieho67@gmail.com"},
 
                 null
         );
@@ -121,7 +122,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         ContentValues values = new ContentValues();
         Uri updateUri = null;
 
-        values.put(CalendarContract.Events.TITLE, "Kickboxing");
+        values.put(CalendarContract.Events.TITLE, title.getText().toString());
         updateUri = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, eventId);
         int rows = getContentResolver().update(updateUri, values, null, null);
         Log.i("UPDATE", "Rows updated: " + rows);
@@ -149,7 +150,7 @@ public class MainActivity extends Activity implements View.OnClickListener {
         Cursor cursor = null;
         ContentResolver cr = getContentResolver();
 
-        cursor = cr.query(builder.build(), calendarColumns, null, null, "DESC");
+        cursor = cr.query(builder.build(), calendarColumns, null, null, CalendarContract.Events.TITLE+ " DESC");
 
 
         ListAdapter listAdapter = new SimpleCursorAdapter(
